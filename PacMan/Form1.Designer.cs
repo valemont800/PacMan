@@ -42,6 +42,7 @@
             this.easyButton = new System.Windows.Forms.Button();
             this.mediumButton = new System.Windows.Forms.Button();
             this.hardButton = new System.Windows.Forms.Button();
+            this.timerLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.life1Picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.life2Picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.life3Picture)).BeginInit();
@@ -72,7 +73,6 @@
             // 
             // gameTimer
             // 
-            this.gameTimer.Enabled = true;
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
@@ -185,12 +185,22 @@
             this.hardButton.Visible = false;
             this.hardButton.Click += new System.EventHandler(this.hardButton_Click);
             // 
+            // timerLabel
+            // 
+            this.timerLabel.Font = new System.Drawing.Font("Perpetua Titling MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timerLabel.Location = new System.Drawing.Point(563, 569);
+            this.timerLabel.Name = "timerLabel";
+            this.timerLabel.Size = new System.Drawing.Size(202, 56);
+            this.timerLabel.TabIndex = 12;
+            this.timerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // title
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 637);
+            this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.hardButton);
             this.Controls.Add(this.mediumButton);
             this.Controls.Add(this.easyButton);
@@ -234,6 +244,7 @@
         private System.Windows.Forms.Button easyButton;
         private System.Windows.Forms.Button mediumButton;
         private System.Windows.Forms.Button hardButton;
+        private System.Windows.Forms.Label timerLabel;
     }
 }
 

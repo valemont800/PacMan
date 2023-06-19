@@ -34,6 +34,10 @@ namespace PacMan
         int enemy2Speed = 6;
         int enemy2HitBoxSpeed = 6;
 
+        //highscore
+        List<string> name = new List<string>();
+        //List<>
+
         //invisible characters (controls)
         List<Rectangle> left = new List<Rectangle>();
         Rectangle leftColumn3Row3 = new Rectangle();
@@ -193,7 +197,7 @@ namespace PacMan
                     {
                         state = "start up";
                     }
-                        
+
                     if (state == "game over" || state == "winner")
                     {
                         InitializeGame();
@@ -250,18 +254,18 @@ namespace PacMan
             player1 = new Rectangle(278, 515, 26, 26);
             player1HitBox = new Rectangle(284, 523, 8, 8);
 
-            enemy = new Rectangle (632, 517, 28, 28);
+            enemy = new Rectangle(632, 517, 28, 28);
             enemyHitBox = new Rectangle(640, 525, 8, 8);
 
-            enemy2 = new Rectangle(307, 63, 28, 28);
+            enemy2 = new Rectangle(397, 62, 28, 28);
             enemy2HitBox = new Rectangle(405, 70, 8, 8);
 
 
             outerBorder = new Rectangle(150, 50, 520, 500);
-            box1 = new Rectangle(200, 90, 170, 185);
-            box2 = new Rectangle(450, 90, 170, 185);
-            box3 = new Rectangle(200, 320, 170, 185);
-            box4 = new Rectangle(450, 320, 170, 185);
+            box1 = new Rectangle(202, 90, 175, 185);
+            box2 = new Rectangle(445, 90, 175, 185);
+            box3 = new Rectangle(202, 320, 175, 185);
+            box4 = new Rectangle(445, 320, 175, 185);
 
             leftColumn3Row3 = new Rectangle(640, 525, 8, 8);
             leftColumn3Row2 = new Rectangle(640, 290, 8, 8);
@@ -375,35 +379,36 @@ namespace PacMan
             life2Picture.Image = Properties.Resources.heart;
             life3Picture.Image = Properties.Resources.heart;
 
-            int timer = 0;
-            int score = 0;
-            int scoreValue = 500;
-            int point = 0;
-            int lifeValue = 3;
+             timer = 0;
+             score = 0;
+             scoreValue = 500;
+             point = 0;
+             lifeValue = 3;
 
 
-            //if (difficulty == "easy")
-            //{
-            //    enemySpeed = 6;
-            //    enemyHitBoxSpeed = 6;
-            //}
-            //if (difficulty == "medium")
-            //{
-            //    enemySpeed = 9;
-            //    enemyHitBoxSpeed = 9;
-            //}
-            //if (difficulty == "hard")
-            //{
-            //    enemySpeed = 9;
-            //    enemyHitBoxSpeed = 9;
-            //}
+            if (difficulty == "easy")
+            {
+                enemySpeed = 6;
+                enemyHitBoxSpeed = 6;
+            }
+            if (difficulty == "medium")
+            {
+                enemySpeed = 9;
+                enemyHitBoxSpeed = 9;
+            }
+            if (difficulty == "hard")
+            {
+                enemySpeed = 9;
+                enemyHitBoxSpeed = 9;
+            }
 
         }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+
             //player movement
             if (direction == "left" && player1.X > 160)
-            { 
+            {
                 player1.X -= player1Speed;
                 player1HitBox.X -= player1HitBoxSpeed;
             }
@@ -421,6 +426,24 @@ namespace PacMan
             {
                 player1.Y += player1Speed;
                 player1HitBox.Y += player1HitBoxSpeed;
+            }
+
+            //make sure not to go through box
+            if (player1.IntersectsWith(box3))
+            {
+                direction = "stop";
+            }
+            if (player1.IntersectsWith(box2))
+            {
+                direction = "stop";
+            }
+            if (player1.IntersectsWith(box1))
+            {
+                direction = "stop";
+            }
+            if (player1.IntersectsWith(box4))
+            {
+                direction = "stop";
             }
 
             //enemy 1
@@ -466,122 +489,97 @@ namespace PacMan
 
 
             //enemy2 direction
-            //if (difficulty == "hard")
-            //{
-            //    if (enemy2HitBox.IntersectsWith(leftColumn3Row2))
-            //    {
-            //        enemyDirection = "go left";
-            //    }
-            //    if (enemy2HitBox.IntersectsWith(rightColumn1Row2))
-            //    {
-            //        enemyDirection = "go right";
-            //    }
-            //    if (enemy2HitBox.IntersectsWith(upColumn2Row3))
-            //    {
-            //        enemyDirection = "go up";
-            //    }
-            //    if (enemy2HitBox.IntersectsWith(downColumn2Row1))
-            //    {
-            //        enemyDirection = "go down";
-            //    }
-            //    if(enemy2HitBox.IntersectsWith(downColumn2Row2))
-            //    {
-            //        randDirection = randGen.Next(1, 101);
-            //        {
-            //            if (randDirection < 25)
-            //            {
-            //                enemy2Direction = "go left";
-            //            }
-            //            else if (randDirection < 50)
-            //            {
-            //                enemy2Direction = "go right";
-            //            }
-            //            else if (randDirection < 75)
-            //            {
-            //                enemy2Direction = "go up";
-            //            }
-            //            else
-            //            {
-            //                enemy2Direction = "go down";
-            //            }
-            //        }
-            //    }
-                //if (difficulty == "hard")
-                //{
-                //    if (enemy2Direction == "go left") //bottom right -> go left
-                //    {
-                //        enemy2.X -= enemy2Speed;
-                //        enemy2HitBox.X -= enemy2HitBoxSpeed;
-                //    }
-                //    else if (enemy2Direction == "go up") //bottom left -> go up
-                //    {
-                //        enemy2.Y -= enemy2Speed;
-                //        enemy2HitBox.Y -= enemy2HitBoxSpeed;
-                //    }
-
-                //    else if (enemy2Direction == "go right")// top left -> go right
-                //    {
-                //        enemy2.X += enemy2Speed;
-                //        enemy2HitBox.X += enemy2HitBoxSpeed;
-                //    }
-                //    else if (enemy2Direction == "go down") // top right -> go down
-                //    {
-                //        enemy2.Y += enemy2Speed;
-                //        enemy2HitBox.Y += enemy2HitBoxSpeed;
-                //    }
-                //}
-            
-
-
-            //make sure not to go through box
-            if (player1.IntersectsWith(box3))
+            if (difficulty == "hard")
             {
-                direction = "stop";
-            }
-            if (player1.IntersectsWith(box2))
-            {
-                direction = "stop";
-            }
-            if (player1.IntersectsWith(box1))
-            {
-                direction = "stop";
-            }
-            if (player1.IntersectsWith(box4))
-            {
-                direction = "stop";
-            }
-
-            for (int i = 0; i < points.Count; i++)
-            {
-                if (points[i].IntersectsWith(player1))
+                if (enemy2HitBox.IntersectsWith(leftColumn3Row2))
                 {
-                    points.RemoveAt(i);
-                    point++;
-                    score = scoreValue + score;
-                    scoreLabel.Text = $"{score}";
-
+                    enemy2Direction = "go left";
                 }
-            }
-            if (player1.IntersectsWith(enemy))
-            {
-                lifeValue = lifeValue - 1;
-                player1.X = 278;
-                player1HitBox.X = 284;
-                player1.Y = 515;
-                player1HitBox.Y = 523;
-                direction = "stop";
-                livesControl();
+                if (enemy2HitBox.IntersectsWith(upColumn1Row2))
+                {
+                    enemy2Direction = "go right";
+                }
+                if (enemy2HitBox.IntersectsWith(upColumn2Row3))
+                {
+                    enemy2Direction = "go up";
+                }
+                if (enemy2HitBox.IntersectsWith(downColumn2Row1))
+                {
+                    enemy2Direction = "go down";
+                }
+                if (enemy2HitBox.IntersectsWith(downColumn2Row2))
+                {
+                    randDirection = randGen.Next(1, 101);
+                    {
+                        if (randDirection < 25)
+                        {
+                            enemy2Direction = "go left";
+                        }
+                        else if (randDirection < 50)
+                        {
+                            enemy2Direction = "go right";
+                        }
+                        else if (randDirection < 75)
+                        {
+                            enemy2Direction = "go up";
+                        }
+                        else
+                        {
+                            enemy2Direction = "go down";
+                        }
+                    }
+                }
+                if (difficulty == "hard")
+                {
+                    if (enemy2Direction == "go left") //bottom right -> go left
+                    {
+                        enemy2.X -= enemy2Speed;
+                        enemy2HitBox.X -= enemy2HitBoxSpeed;
+                    }
+                    else if (enemy2Direction == "go up") //bottom left -> go up
+                    {
+                        enemy2.Y -= enemy2Speed;
+                        enemy2HitBox.Y -= enemy2HitBoxSpeed;
+                    }
 
-            }
-            if (point == 21)
-            {
-                state = "winner";
-            }
+                    else if (enemy2Direction == "go right")// top left -> go right
+                    {
+                        enemy2.X += enemy2Speed;
+                        enemy2HitBox.X += enemy2HitBoxSpeed;
+                    }
+                    else if (enemy2Direction == "go down") // top right -> go down
+                    {
+                        enemy2.Y += enemy2Speed;
+                        enemy2HitBox.Y += enemy2HitBoxSpeed;
+                    }
+                }
 
 
-            Refresh();
+                for (int i = 0; i < points.Count; i++)
+                {
+                    if (points[i].IntersectsWith(player1))
+                    {
+                        points.RemoveAt(i);
+                        point++;
+                        score = scoreValue + score;
+                        scoreLabel.Text = $"{score}";
+                    }
+                }
+                if (player1.IntersectsWith(enemy) || player1.IntersectsWith(enemy2))
+                {
+                    enemyHit();
+                    livesControl();
+                }
+
+                if (point == 21)
+                {
+                    state = "winner";
+                }
+
+                Refresh();
+            }
+
         }
-
         public void livesControl()
         {
             if (lifeValue == 3)
@@ -611,6 +609,15 @@ namespace PacMan
             }
         }
 
+        public void enemyHit()
+        {
+            lifeValue = lifeValue - 1;
+            player1.X = 278;
+            player1HitBox.X = 284;
+            player1.Y = 515;
+            player1HitBox.Y = 523;
+            direction = "stop";
+        }
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (state == "waiting")
@@ -679,42 +686,31 @@ namespace PacMan
                     e.Graphics.DrawImage(Properties.Resources.kirby1left, player1.X, player1.Y, player1.Width, player1.Height);
 
                 }
-                else if (direction == "up" && player1.Y > 63)
+                else if (direction == "up"/* && player1.Y > 63*/)
                 {
                     e.Graphics.DrawImage(Properties.Resources.kirby1up, player1.X, player1.Y, player1.Width, player1.Height);
 
                 }
-                else if (direction == "right" & player1.X < 650 - player1.Width)
+                else if (direction == "right" /*& player1.X < 650 - player1.Width*/)
                 {
                     e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
 
                 }
-                else if (direction == "down" && player1.Y < 540 - player1.Height)
+                else if (direction == "down" /*&& player1.Y < 540 - player1.Height*/)
                 {
                     e.Graphics.DrawImage(Properties.Resources.kirby1down, player1.X, player1.Y, player1.Width, player1.Height);
+                }
+                else
+                { 
+                    e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
                 }
 
                 if (player1.IntersectsWith(box3))
                 {
                     direction = "stop";
                     e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
-
                 }
-                if (player1.IntersectsWith(box2))
-                {
-                    direction = "stop";
-                    e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
-                }
-                if (player1.IntersectsWith(box1))
-                {
-                    direction = "stop";
-                    e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
-                }
-                if (player1.IntersectsWith(box4))
-                {
-                    direction = "stop";
-                    e.Graphics.DrawImage(Properties.Resources.kirby1, player1.X, player1.Y, player1.Width, player1.Height);
-                }
+                
 
                 //enemy direction image
                 if (enemyDirection == "go left")
@@ -734,34 +730,35 @@ namespace PacMan
                     e.Graphics.DrawImage(Properties.Resources.cappydown, enemy.X, enemy.Y, enemy.Width, enemy.Height);
                 }
 
-                //hard difficulty
-                //if (difficulty == "hard")
-                //{
-                //    if (enemy2Direction == "go left")
-                //    {
-                //        e.Graphics.FillRectangle(blueBrush, enemy2);
-                //        //e.Graphics.DrawImage(Properties.Resources.burtleft, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
-                //    }
-                //    else if (enemy2Direction == "go up")
-                //    {
-                //        e.Graphics.FillRectangle(blueBrush, enemy2);
+                //enemy 2
+                if (difficulty == "hard")
+                {
+                    if (enemy2Direction == "go left")
+                    {
+                        //e.Graphics.FillRectangle(blueBrush, enemy2);
+                        e.Graphics.DrawImage(Properties.Resources.burtleft, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
+                    }
+                    else if (enemy2Direction == "go up")
+                    {
+                        //e.Graphics.FillRectangle(blueBrush, enemy2);
 
-                //        //e.Graphics.DrawImage(Properties.Resources.burtup, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
-                //    }
-                //    else if (enemy2Direction == "go right")
-                //    {
-                //        e.Graphics.FillRectangle(blueBrush, enemy2);
+                        e.Graphics.DrawImage(Properties.Resources.burtup, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
+                    }
+                    else if (enemy2Direction == "go right")
+                    {
+                        //e.Graphics.FillRectangle(blueBrush, enemy2);
 
-                //        //e.Graphics.DrawImage(Properties.Resources.burtright, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
-                //    }
-                //    else if (enemy2Direction == "go down")
-                //    {
-                //        e.Graphics.FillRectangle(blueBrush, enemy2);
+                        e.Graphics.DrawImage(Properties.Resources.burtright, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
+                    }
+                    else if (enemy2Direction == "go down")
+                    {
+                        //e.Graphics.FillRectangle(blueBrush, enemy2);
 
-                //        //e.Graphics.DrawImage(Properties.Resources.burtdown, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
-                //    }
-                //}
+                        e.Graphics.DrawImage(Properties.Resources.burtdown, enemy2.X, enemy2.Y, enemy2.Width, enemy2.Height);
+                    }
+                }
             }
+
             if (state == "winner")
             {
                 scoreLabel.Enabled = false;
@@ -770,10 +767,13 @@ namespace PacMan
                 life2Picture.Image = null;
                 life3Picture.Image = null;
 
+                titleName.Visible = true;
                 titleName.ForeColor = Color.LimeGreen;
                 titleName.Text = "YOU WIN";
+                subtitleLabel.Visible = true;
                 subtitleLabel.Text = "Press Space to Play or Esc. to Exit";
             }
+
             if (state == "game over")
             {
                 scoreLabel.Enabled = false;
@@ -782,8 +782,10 @@ namespace PacMan
                 life2Picture.Image = null;
                 life3Picture.Image = null;
 
+                titleName.Visible = true;
                 titleName.ForeColor = Color.Red;
                 titleName.Text = "YOU LOSE";
+                subtitleLabel.Visible = true;
                 subtitleLabel.Text = "Press Space to Play or Esc. to Exit";
             }
 
@@ -791,25 +793,34 @@ namespace PacMan
 
         private void easyButton_Click(object sender, EventArgs e)
         {
-            easyButton.Enabled = false;
-            mediumButton.Enabled = false;
-            hardButton.Enabled = false;
+
             this.Focus();
 
             difficulty = "easy";
-                InitializeGame();
+            InitializeGame();
+            easyButton.Enabled = false;
+            mediumButton.Enabled = false;
+            hardButton.Enabled = false;
         }
         private void mediumButton_Click(object sender, EventArgs e)
         {
+            this.Focus();
 
             difficulty = "medium";
-                InitializeGame();
+            InitializeGame();
+            easyButton.Enabled = false;
+            mediumButton.Enabled = false;
+            hardButton.Enabled = false;
         }
         private void hardButton_Click(object sender, EventArgs e)
         {
+            this.Focus();
 
-                difficulty = "hard";
-                InitializeGame();
+            difficulty = "hard";
+            InitializeGame();
+            easyButton.Enabled = false;
+            mediumButton.Enabled = false;
+            hardButton.Enabled = false;
         }
     }
 }
